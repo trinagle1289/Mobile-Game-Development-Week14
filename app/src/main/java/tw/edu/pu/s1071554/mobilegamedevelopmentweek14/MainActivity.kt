@@ -1,6 +1,7 @@
 package tw.edu.pu.s1071554.mobilegamedevelopmentweek14
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,22 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        var db = MyDatabase.getInst(applicationContext)
+
+        try {
+            db.getDao().insertProd(Product("Test", 1))
+            var plist = db.getDao().getALL()
+
+            var mypro = ""
+            for (pd in plist) {
+                mypro += pd.pname + ","
+            }
+            Toast.makeText(applicationContext, mypro, Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            print(e.message)
+        }
+
     }
 }
 
